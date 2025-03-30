@@ -14,18 +14,9 @@ def create_app():
     db.init_app(app)
     CORS(app, supports_credentials=True, origins=["*"])
     
-    # Register blueprints
-    from app.routes.auth_routes import auth_bp
-    from app.routes.slot_routes import slot_bp
-    from app.routes.user_routes import user_bp
-    from app.routes.booking_routes import booking_bp
-    from app.routes.feedback_routes import feedback_bp
-    
-    app.register_blueprint(auth_bp)
-    app.register_blueprint(slot_bp)
-    app.register_blueprint(user_bp)
-    app.register_blueprint(booking_bp)
-    app.register_blueprint(feedback_bp)
+    # Import and register routes
+    from app.routes import init_routes
+    init_routes(app)
     
     # Create tables
     with app.app_context():
